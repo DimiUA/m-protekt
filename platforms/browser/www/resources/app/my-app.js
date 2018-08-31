@@ -436,7 +436,7 @@ $$('body').on('click', 'a.external', function(event) {
     setNotificationList(all_msg);
 });*/
 
-$$('body').on('click', '.navbar_title ', function(){
+/*$$('body').on('click', '.navbar_title ', function(){
     //var payload = {};
     //console.log('')
     var payload = {
@@ -455,7 +455,7 @@ $$('body').on('click', '.navbar_title ', function(){
     };
     //plus.push.createMessage("Welcome", payload, {cover:false} );
     showMsgNotification([payload]);
-});
+});*/
 
 
 $$('.login-form').on('submit', function (e) {    
