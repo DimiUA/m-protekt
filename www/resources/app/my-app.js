@@ -360,10 +360,10 @@ var virtualAssetList = App.virtualList('.assets_list', {
 });
 
 
-$$('body').on('click', '.index-title', function(){
+/*$$('body').on('click', '.index-title', function(){
     //var payload = {};
     //console.log('')
-    /*var payload = {
+    var payload = {
         "type":"sms_received",
         "alarm":"location",
         "imsi":"43688875284305",
@@ -376,10 +376,10 @@ $$('body').on('click', '.index-title', function(){
         "positionTime":"2017-02-07T12:17:25",
         "speed":"0.19",
         "direct":"0.00"
-    };*/
+    };
     //plus.push.createMessage("Welcome", payload, {cover:false} );
     showMsgNotification([payload]);
-});
+});*/
 
 $$('body').on('click', 'a.external', function(event) {
     event.preventDefault();
