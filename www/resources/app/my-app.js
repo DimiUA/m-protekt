@@ -2062,16 +2062,6 @@ function loadStatusPage(msg){
         context: msg,                             
     });
 }
-function loadStatusPage(msg){
-    mainView.router.load({
-        url:'resources/templates/asset.status.html',
-        context:{
-            Name: msg.AssetName,
-            IMEI: msg.Imei,
-            props: msg,
-        }                      
-    });
-}
 
 function processSVData(data, status) {
     var SVButton = $$(document).find('.pano_button');
