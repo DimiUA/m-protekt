@@ -61,9 +61,7 @@ function onDeviceReady(){
     if (window.MobileAccessibility) {
         window.MobileAccessibility.usePreferredTextZoom(false);    
     }
-    if (StatusBar) {
-        StatusBar.styleDefault();
-    } 
+
     setupPush();
 
     getPlusInfo(); 
@@ -144,32 +142,11 @@ function setupPush(){
                     }
                 }, 1000); 
             }
-            if (device && device.platform && device.platform.toLowerCase() == 'ios') {
-                push.finish(
-                    () => {
-                      console.log('processing of push data is finished');
-                    },
-                    () => {
-                      console.log(
-                        'something went wrong with push.finish for ID =',
-                        data.additionalData.notId
-                      );
-                    },
-                    data.additionalData.notId
-                );
-            }
         });
 
  
         if　(!localStorage.ACCOUNT){
-            push.clearAllNotifications(
-                () => {
-                  console.log('success');
-                },
-                () => {
-                  console.log('error');
-                }
-            );
+            push.clearAllNotifications();
         }
 }
 
@@ -2082,16 +2059,7 @@ function loadStatusPage(msg){
         context: msg,                             
     });
 }
-function loadStatusPage(msg){
-    mainView.router.load({
-        url:'resources/templates/asset.status.html',
-        context:{
-            Name: msg.AssetName,
-            IMEI: msg.Imei,
-            props: msg,
-        }                      
-    });
-}
+
 
 function processSVData(data, status) {
     var SVButton = $$(document).find('.pano_button');
@@ -2768,7 +2736,7 @@ function processClickOnPushNotification(msgJ){
         }
 
         //console.log(msg);
-        if( msg && msg.alarm == 'Status' || msg.alarm == 'status' ){            
+        if( msg && msg.alarm && msg.alarm.toLowerCase() == 'status' ){           
             loadStatusPage(msg);                               
         }else if (msg && parseFloat(msg.lat) && parseFloat(msg.lat) || msg && parseFloat(msg.Lat) && parseFloat(msg.Lat)) { 
             
