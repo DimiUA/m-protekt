@@ -60,10 +60,7 @@ function onDeviceReady(){
     //fix app images and text size
     if (window.MobileAccessibility) {
         window.MobileAccessibility.usePreferredTextZoom(false);    
-    }   
-    if (StatusBar) {
-        StatusBar.styleDefault();
-    } 
+    }
 
     setupPush();
 
@@ -145,32 +142,11 @@ function setupPush(){
                     }
                 }, 1000); 
             }
-            if (device && device.platform && device.platform.toLowerCase() == 'ios') {
-                push.finish(
-                    () => {
-                      console.log('processing of push data is finished');
-                    },
-                    () => {
-                      console.log(
-                        'something went wrong with push.finish for ID =',
-                        data.additionalData.notId
-                      );
-                    },
-                    data.additionalData.notId
-                );
-            }
-                
         });
 
+ 
         if　(!localStorage.ACCOUNT){
-            push.clearAllNotifications(
-                () => {
-                  console.log('success');
-                },
-                () => {
-                  console.log('error');
-                }
-            );
+            push.clearAllNotifications();
         }
 }
 
@@ -360,26 +336,7 @@ var virtualAssetList = App.virtualList('.assets_list', {
 });
 
 
-$$('body').on('click', '.index-title', function(){
-    //var payload = {};
-    //console.log('')
-    /*var payload = {
-        "type":"sms_received",
-        "alarm":"location",
-        "imsi":"43688875284305",
-        "AssetName":"Jack Da Roo",
-        "imei":"0352544071889449",
-        "messageReference":"c8e721a6-c549-4aa3-a940-0082bed7e0c5",
-        "state":"received",
-        "Lat":-32.03289,
-        "Lng":115.86833,
-        "positionTime":"2017-02-07T12:17:25",
-        "speed":"0.19",
-        "direct":"0.00"
-    };*/
-    //plus.push.createMessage("Welcome", payload, {cover:false} );
-    showMsgNotification([payload]);
-});
+
 
 $$('body').on('click', 'a.external', function(event) {
     event.preventDefault();
@@ -499,6 +456,46 @@ $$('body').on('click', '#menu li', function () {
     }
 });
     
+/*$$('body').on('click', '.index-title ', function(){
+    //var payload = {};
+    //console.log('')
+    var payload = {
+        "type":"sms_received",
+        "alarm":"location",
+        "imsi":"43688875284305",
+        "AssetName":"Jack Da Roo",
+        "imei":"0352544071889449",
+        "messageReference":"c8e721a6-c549-4aa3-a940-0082bed7e0c5",
+        "state":"received",
+        "Lat":-32.03289,
+        "Lng":115.86833,
+        "positionTime":"2017-02-07T12:17:25",
+        "speed":"0.19",
+        "direct":"0.00"
+    };
+   
+    showMsgNotification([payload]);
+});*/
+
+/*$$('body').on('click', '.index-title', function(){
+    console.log('click');
+    var msg = {
+        "Imei":"0354188046337940",
+        "AssetName": "Test",
+        "Acc":"OFF",
+        "Relay":"OFF",
+        "Battery":"4477(mV)",
+        "Charger":"0(mV)",
+        "Power":"1",
+        "GPS":"V,0",
+        "GSM":"2,-107(dB)",
+        "GPRS":"Offline",
+        "alarm":"status",
+        "Imsi":"43688875220070"
+    };
+    showMsgNotification([msg]);;
+});*/
+
 $$(document).on('click', 'a.tab-link', function(e){
     e.preventDefault(); 
     var currentPage = App.getCurrentView().activePage.name;        
@@ -1078,7 +1075,7 @@ App.onPageInit('asset.alarm', function (page) {
     var alarm = $$(page.container).find('input[name = "checkbox-alarm"]'); 
     var allCheckboxesLabel = $$(page.container).find('label.item-content');
     var allCheckboxes = allCheckboxesLabel.find('input');
-    var alarmFields = ['geolock','tilt','impact','power'];  
+    var alarmFields = ['geolock','tilt','impact','power','input','accOff','accOn'];   
     
 
     alarm.on('change', function(e) { 
@@ -1270,7 +1267,7 @@ App.onPageInit('alarms.select', function (page) {
     var allCheckboxesLabel = $$(page.container).find('label.item-content');
     var allCheckboxes = allCheckboxesLabel.find('input');
     var assets = $$(page.container).find('input[name="Assets"]').val();
-    var alarmFields = ['geolock','tilt','impact','power'];     
+    var alarmFields = ['geolock','tilt','impact','power','input','accOff','accOn'];     
 
     alarm.on('change', function(e) { 
         if( $$(this).prop('checked') ){
@@ -2279,49 +2276,66 @@ function loadPageAssetAlarm(){
     var asset = assetList[TargetAsset.IMEI];
     var assetAlarmVal = assetList[TargetAsset.IMEI].AlarmOptions;       
     var alarms = {
-        alarm: {
-            state: true,
-            //val: 0,
-        },
-        geolock: {
-            state: true,
-            val: 1024,
-        },
-        tilt: {
-            state: true,
-            val: 256,
-        },
-        impact: {
-            state: true,
-            val: 16384,
-        },
-        power: {
-            state: true,
-            val: 4,
-        }
-    };  
-    if (assetAlarmVal) {
-        $.each( alarms, function ( key, value ) {            
-            if (assetAlarmVal & value.val) {                
-                alarms[key].state = false;
-            }            
+            alarm: {
+                state: true,
+                //val: 0,
+            },
+            geolock: {
+                state: true,
+                val: 1024,
+            },
+            tilt: {
+                state: true,
+                val: 256,
+            },
+            impact: {
+                state: true,
+                val: 16384,
+            },
+            power: {
+                state: true,
+                val: 4,
+            },
+            input: {
+                state: true,
+                val: 131072,
+            },
+            accOff: {
+                state: true,
+                val: 65536,
+            },
+            accOn: {
+                state: true,
+                val: 32768,
+            }
+        };      
+
+        if (assetAlarmVal) {
+            $.each( alarms, function ( key, value ) {            
+                if (assetAlarmVal & value.val) {                
+                    alarms[key].state = false;
+                }            
+            });
+            if (assetAlarmVal == 247044) {
+                alarms.alarm.state = false;
+            }
+            
+        }       
+
+        mainView.router.load({
+            url:'resources/templates/asset.alarm.html',
+            context:{
+                Name: asset.Name,            
+                Alarm: alarms.alarm.state,
+                Geolock: alarms.geolock.state,
+                Tilt: alarms.tilt.state,
+                Impact: alarms.impact.state,                
+                Power: alarms.power.state,
+                Input: alarms.input.state,
+                AccOff: alarms.accOff.state,
+                AccOn: alarms.accOn.state,
+            }
         });
-        if (assetAlarmVal == 17668) {
-            alarms.alarm.state = false;
-        }
-        
-    }
-    mainView.router.load({
-        url:'resources/templates/asset.alarm.html',
-        context:{
-            Name: asset.Name,            
-            Alarm: alarms.alarm.state,
-            Geolock: alarms.geolock.state,
-            Tilt: alarms.tilt.state,
-            Impact: alarms.impact.state,                
-            Power: alarms.power.state,              
-        }
-    });
 }
 
 function loadPageSupport(){
