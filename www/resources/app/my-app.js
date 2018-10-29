@@ -61,7 +61,9 @@ function onDeviceReady(){
     if (window.MobileAccessibility) {
         window.MobileAccessibility.usePreferredTextZoom(false);    
     }
-
+    if (StatusBar) {
+        StatusBar.styleDefault();
+    } 
     setupPush();
 
     getPlusInfo(); 
@@ -141,6 +143,20 @@ function setupPush(){
                         },1000); 
                     }
                 }, 1000); 
+            }
+            if (device && device.platform && device.platform.toLowerCase() == 'ios') {
+                push.finish(
+                    () => {
+                      console.log('processing of push data is finished');
+                    },
+                    () => {
+                      console.log(
+                        'something went wrong with push.finish for ID =',
+                        data.additionalData.notId
+                      );
+                    },
+                    data.additionalData.notId
+                );
             }
         });
 
