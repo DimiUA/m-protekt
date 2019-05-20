@@ -368,10 +368,10 @@ $$('body').on('click', 'a.external', function(event) {
     if (href) {
         if (typeof navigator !== "undefined" && navigator.app) {
             if (device && device.platform && device.platform.toLowerCase() == 'ios') {
-                alert(device.platform.toLowerCase());
+                //alert(device.platform.toLowerCase());
                 window.open(href, '_system');                   
             }else{
-                alert(device.platform.toLowerCase());
+               // alert(device.platform.toLowerCase());
                 navigator.app.loadUrl(href, {openExternal: true});
             }                      
         } else {
@@ -2438,8 +2438,14 @@ function loadPageSupport(){
         } else {
             window.open(href,'_blank');
         }*/
-    if (href) {
-        if (typeof navigator !== "undefined" && navigator.app) {
+
+    App.alert(navigator);
+    App.alert(device.platform.toLowerCase());
+
+
+    window.open(href, '_system');
+
+        /*if (typeof navigator !== "undefined" && navigator.app) {
             if (device && device.platform && device.platform.toLowerCase() == 'ios') {
                 alert(device.platform.toLowerCase());
                 window.open(href, '_system');                   
@@ -2449,8 +2455,8 @@ function loadPageSupport(){
             }                      
         } else {
             window.open(href,'_blank');
-        }
-    }
+        }*/
+   
 }
 
 function getNewNotifications(params){ 
