@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.sino.mprotekt" version="1.3.3" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US" android-versionCode="74" ios-CFBundleVersion="74">
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.sino.mprotekt" version="1.3.3" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US" android-versionCode="75" ios-CFBundleVersion="75">
     <name>M-Protekt</name>
     <description>
        M-Protekt helps you seamlessly locate vehicle, motorbike, caravan or otherwise!

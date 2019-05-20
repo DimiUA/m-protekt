@@ -448,7 +448,7 @@ $$('body').on('click', '.routeButton', function(){
             window.open(href,'_blank');
         }*/
 
-        if (typeof navigator !== "undefined" && navigator.app) {
+        /*if (typeof navigator !== "undefined" && navigator.app) {
             if (device && device.platform && device.platform.toLowerCase() == 'ios') {
                 alert(device.platform.toLowerCase());
                 window.open(href, '_system');                   
@@ -458,7 +458,8 @@ $$('body').on('click', '.routeButton', function(){
             }                      
         } else {
             window.open(href,'_blank');
-        }
+        }*/
+        window.open(encodeURI(href), '_blank', 'location=yes');
     
     }
     
