@@ -57,6 +57,8 @@ if( navigator.userAgent.match(/Windows/i) ){
 document.addEventListener("deviceready", onDeviceReady, false ); 
 
 function onDeviceReady(){ 
+    window.open = cordova.InAppBrowser.open;
+
     //fix app images and text size
     if (window.MobileAccessibility) {
         window.MobileAccessibility.usePreferredTextZoom(false);    
@@ -2439,8 +2441,8 @@ function loadPageSupport(){
             window.open(href,'_blank');
         }*/
 
-    App.alert(navigator);
-    App.alert(device.platform.toLowerCase());
+    //App.alert(navigator);
+    //App.alert(device.platform.toLowerCase());
 
 
     window.open(href, '_system');
