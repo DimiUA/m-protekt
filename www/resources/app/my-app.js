@@ -368,7 +368,7 @@ $$('body').on('click', 'a.external', function(event) {
     event.preventDefault();
     var href = this.getAttribute('href');
     if (href) {
-        if (typeof navigator !== "undefined" && navigator.app) {
+        /*if (typeof navigator !== "undefined" && navigator.app) {
             if (device && device.platform && device.platform.toLowerCase() == 'ios') {
                 //alert(device.platform.toLowerCase());
                 window.open(href, '_system');                   
@@ -378,7 +378,9 @@ $$('body').on('click', 'a.external', function(event) {
             }                      
         } else {
             window.open(href,'_blank');
-        }
+        }*/
+        //console.log();
+        window.open(encodeURI(href), '_blank', 'location=yes');
     }
     return false;
 });
