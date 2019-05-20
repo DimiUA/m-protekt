@@ -2445,7 +2445,7 @@ function loadPageSupport(){
     //App.alert(device.platform.toLowerCase());
 
 
-    window.open(href, '_system');
+    window.open(href, '_blank', 'location=yes');
 
         /*if (typeof navigator !== "undefined" && navigator.app) {
             if (device && device.platform && device.platform.toLowerCase() == 'ios') {
